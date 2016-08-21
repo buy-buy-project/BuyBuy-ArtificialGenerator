@@ -14,16 +14,17 @@ module.exports = function(app){
         return seed;
     }
 
-    var shopping = { buy: [] };
-    var collection = DATABASE.collection("shopping");
-    var seed;
+    var shopping = { buy: [] }
+     ,  collection = DATABASE.collection("shopping")
+     ,  seed
+     , unitBuy;
 
     for(var day = 0; day < 90; day++){
         for(var buy = 0; buy <= 30; buy++){
 
             seed = randomQuantityProductBuy(day, app.products.stock[buy].daysIntervalNearly)    
 
-            var unitBuy = {
+            unitBuy = {
                 "costumer": app.costumers.base[0].id,
                 "product":  app.products.stock[buy].id,
                 "quantity": seed,

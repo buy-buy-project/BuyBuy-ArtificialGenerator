@@ -1,6 +1,6 @@
 //Program 1 Exchange lines of shopping
 
-//Value between 0-1 that indicate the percentage of life will gone random 
+//Value between 0-1 that indicate the percentage of lines will gone random 
 var PERCENTAGE_SHAKE = 0.10;
 var express = require('express')
   , load = require('express-load')
