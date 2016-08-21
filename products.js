@@ -2,130 +2,172 @@ module.exports = function(app) {
     app.get('/products', function(req, res){
         res.json(app.products);
     });
+    
+    var collection = DATABASE.collection("products");
+    var daysIntervals = [3,5,7,14,30];
 
-    return products = 
+    var products = 
     {
         stock: [
             {
+                "id": 0,
+                "name": "Agua",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
+            },
+            {
                 "id": 1,
-                "name": "Arroz"
+                "name": "Arroz",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },
             {
                 "id": 2,
-                "name": "Feijao"
+                "name": "Feijao",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },
             {
                 "id": 3,
-                "name": "Leite"
+                "name": "Leite",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 4,
-                "name": "Cafe"
+                "name": "Cafe",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 5,
-                "name": "Laranja"
+                "name": "Laranja",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 6,
-                "name": "Banana"
+                "name": "Banana",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 7,
-                "name": "Biscoito"
+                "name": "Biscoito",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 8,
-                "name": "Refrigerante"
+                "name": "Refrigerante",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 9,
-                "name": "Carne"
+                "name": "Carne",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 10,
-                "name": "Frango"
+                "name": "Frango",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 11,
-                "name": "Ovo"
+                "name": "Ovo",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 12,
-                "name": "Shampoo"
+                "name": "Shampoo",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },          
             {
                 "id": 13,
-                "name": "Pasta de Dente"
+                "name": "Pasta de Dente",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 14,
-                "name": "Papel Higiênico"
+                "name": "Papel Higiênico",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 15,
-                "name": "Sabonete"
+                "name": "Sabonete",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 16,
-                "name": "Azeite"
+                "name": "Azeite",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 17,
-                "name": "Sal"
+                "name": "Sal",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 18,
-                "name": "Açucar"
+                "name": "Açucar",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 19,
-                "name": "Cerveja"
+                "name": "Cerveja",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 20,
-                "name": "Sorvete"
+                "name": "Sorvete",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 21,
-                "name": "Abacaxi"
+                "name": "Abacaxi",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 22,
-                "name": "Melancia"
+                "name": "Melancia",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 23,
-                "name": "Melao"
+                "name": "Melao",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 24,
-                "name": "Cenoura"
+                "name": "Cenoura",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 25,
-                "name": "Desodorante"
+                "name": "Desodorante",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 26,
-                "name": "Queijo"
+                "name": "Queijo",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 27,
-                "name": "Pao"
+                "name": "Pao",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 28,
-                "name": "Bolacha"
+                "name": "Bolacha",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 29,
-                "name": "Cebola"
+                "name": "Cebola",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             },                
             {
                 "id": 30,
-                "name": "Alho"
+                "name": "Alho",
+                "daysIntervalNearly": daysIntervals[ Math.floor((Math.random() * 5)) ]
             }
         ],
     };
+
+    collection.insert(products.stock, function(err, result){});
+    
+    return products;
 }

@@ -9,7 +9,8 @@ var express = require('express')
 
     console.log("Connected correctly to Mongo");
     global.DATABASE = db; 
-    
+
+
     load('products').
       then('costumers').
       then('shopping').
