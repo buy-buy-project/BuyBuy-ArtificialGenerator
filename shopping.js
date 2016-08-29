@@ -4,10 +4,20 @@ module.exports = function(app){
         res.json(app.shopping)
     });
 
+    app.get("/experimento1/:id", function(req, res){
+        var id = parseInt(req.params.id);
+        DATABASE.collection("shopping").find({"produto_id": id}, {"_id": 0}).toArray(function(err, result){
+            result.unshift({"Produto" : app.products.stock[id].name,
+                            "Intervalo" : app.products.stock[id].daysIntervalNearly});
+            res.json(result);    
+        });
+    });
+
     var randomQuantityProductBuy = function(currentDay, daysInterval){
         var seed;
         if(Number.isInteger(currentDay/daysInterval)){
-            seed = Math.floor((Math.random() * 10) + 1);
+            seed = 5;
+            //seed = Math.floor((Math.random() * 10) + 1);
         } else{
             seed = 0;
         }
@@ -17,24 +27,29 @@ module.exports = function(app){
     var shopping = { buy: [] }
      ,  collection = DATABASE.collection("shopping")
      ,  seed
-     , unitBuy;
+     , unitBuy
+     , product = {};
 
     for(var day = 0; day < 90; day++){
         for(var buy = 0; buy <= 30; buy++){
 
             seed = randomQuantityProductBuy(day, app.products.stock[buy].daysIntervalNearly)    
+            
+            product.produto_id = app.products.stock[buy].id;
+            product.produto_name = app.products.stock[buy].name;
 
             unitBuy = {
-                "costumer": app.costumers.base[0].id,
-                "product":  app.products.stock[buy].id,
-                "quantity": seed,
-                "date": day
+                "consumidor": app.costumers.base[0].id,
+                "produto_id":   app.products.stock[buy].id,
+                "quantidade": seed,
+                "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
             }
 
             shopping.buy.push(unitBuy);    
             collection.insert(unitBuy, function(err, result){});
         }
     }
+    
 
     return shopping;
 }   
