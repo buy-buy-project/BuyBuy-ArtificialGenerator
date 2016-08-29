@@ -1,5 +1,6 @@
 var express = require('express')
   , load = require('express-load')
+  , moment = require('moment')
   , app  = express()
   , PORT = 4000
   , mongo = require('mongodb').MongoClient;
@@ -9,7 +10,7 @@ var express = require('express')
 
     console.log("Connected correctly to Mongo");
     global.DATABASE = db; 
-
+    global.moment = moment;
 
     load('products').
       then('costumers').
