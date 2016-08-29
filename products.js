@@ -1,8 +1,17 @@
 module.exports = function(app) {
+    
+    /**
     app.get('/products', function(req, res){
         res.json(app.products);
     });
-    
+    */
+     
+    app.get("/produtos", function(req, res){
+        DATABASE.collection("products").find({}, {"_id": 0, "daysIntervalNearly":0}).toArray(function(err, result){
+            res.json(result);    
+        });
+    });
+
     var collection = DATABASE.collection("products");
     var daysIntervals = [3,5,7,14,30];
 
