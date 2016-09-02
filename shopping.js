@@ -33,7 +33,7 @@ module.exports = function(app){
      , unitBuy
      , product = {};
 
-    for(var day = 0; day < 90; day++){
+    for(var day = 1; day < 91; day++){
         for(var buy = 0; buy <= 30; buy++){
 
             seed = randomQuantityProductBuy(day, app.products.stock[buy].daysIntervalNearly)    
