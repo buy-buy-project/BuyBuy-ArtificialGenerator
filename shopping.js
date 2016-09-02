@@ -7,8 +7,6 @@ module.exports = function(app){
     app.get("/experimento1/:id", function(req, res){
         var id = parseInt(req.params.id);
         DATABASE.collection("shopping").find({"produto_id": id}, {"_id": 0}).toArray(function(err, result){
-            result.unshift({"Produto" : app.products.stock[id].name,
-                            "Intervalo" : app.products.stock[id].daysIntervalNearly});
             res.json(result);    
         });
     });
@@ -22,6 +20,11 @@ module.exports = function(app){
             seed = 0;
         }
         return seed;
+    }
+
+    //Use here to do the gaussian
+    function randomIntFromInterval(min,max){
+        return Math.floor(Math.random()*(max-min+1)+min);
     }
 
     var shopping = { buy: [] }
