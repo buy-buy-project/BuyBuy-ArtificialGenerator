@@ -176,7 +176,7 @@ module.exports = function(app) {
         ],
     };
 
-    collection.insert(products.stock, function(err, result){});
+    //collection.insert(products.stock, function(err, result){});
     
     return products;
 }

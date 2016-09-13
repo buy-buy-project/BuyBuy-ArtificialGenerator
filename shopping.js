@@ -23,7 +23,7 @@ module.exports = function(app){
     }
 
     //Use here to do the gaussian
-    function randomIntFromInterval(min,max){
+    var randomIntFromInterval = function (min,max){
         return Math.floor(Math.random()*(max-min+1)+min);
     }
 
@@ -49,7 +49,7 @@ module.exports = function(app){
             }
 
             shopping.buy.push(unitBuy);    
-            collection.insert(unitBuy, function(err, result){});
+            //collection.insert(unitBuy, function(err, result){});
         }
     }
     
