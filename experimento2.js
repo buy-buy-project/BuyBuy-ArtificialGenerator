@@ -2,7 +2,7 @@ module.exports = function(app){
 
     app.get("/experimento2/:id/:noise", function(req, res){
         var id = parseInt(req.params.id);
-        var noise = parseInt(req.params.noise);
+        var noise = parseFloat(req.params.noise);
 
         var randomQuantityProductBuy = function(currentDay, daysInterval){
             var seed;
