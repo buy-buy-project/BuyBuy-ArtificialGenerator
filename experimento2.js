@@ -111,7 +111,7 @@ module.exports = function(app){
                 //collection.insert(unitBuy, function(err, result){});
             //}
         }
-        res.json(shopping);
+        res.json(shopping.buy);
 
     });
 }   
