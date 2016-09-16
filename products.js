@@ -13,7 +13,8 @@ module.exports = function(app) {
     });
 
     var collection = DATABASE.collection("products");
-    var daysIntervals = [3,5,7,14,30];
+    //var daysIntervals = [3,5,7,14,30];
+    var daysIntervals = [3,3,3,3,3];
 
     var products = 
     {
