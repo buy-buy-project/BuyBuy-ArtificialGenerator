@@ -6,7 +6,7 @@ module.exports = function(app){
 
     app.get("/experimento1/:id", function(req, res){
         var id = parseInt(req.params.id);
-        DATABASE.collection("shopping").find({"produto_id": id}, {"_id": 0}).toArray(function(err, result){
+        DATABASE.collection("exeperiment1").find({"produto_id": id}, {"_id": 0}).toArray(function(err, result){
             res.json(result);    
         });
     });
@@ -28,7 +28,7 @@ module.exports = function(app){
     }
 
     var shopping = { buy: [] }
-     ,  collection = DATABASE.collection("shopping")
+     ,  collection = DATABASE.collection("exeperiment1")
      ,  seed
      , unitBuy
      , product = {};
@@ -49,7 +49,7 @@ module.exports = function(app){
             }
 
             shopping.buy.push(unitBuy);    
-            //collection.insert(unitBuy, function(err, result){});
+            collection.insert(unitBuy, function(err, result){});
         }
     }
     
