@@ -49,7 +49,7 @@ module.exports = function(app){
             }
 
             shopping.buy.push(unitBuy);    
-            collection.insert(unitBuy, function(err, result){});
+            //collection.insert(unitBuy, function(err, result){});
         }
     }
     

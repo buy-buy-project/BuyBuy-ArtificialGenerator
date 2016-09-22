@@ -38,22 +38,22 @@ module.exports = function(app){
             
             var j = 0;
             for(var i = minimum.value; i <= peak.value; i++){
+                var teste = {};
+                teste.percentage = percentages[j]
+                teste.value = i
+                allValues.push(teste)
                 j++;
-                allValues.push({
-                    "value": i,
-                    "percentage": percentages[j]
-                })
-            }
-            
-            j = 0;
-            for(var i = maximum.value; i > peak.value; i--){
-                j++;
-                allValues.push({
-                    "value": i,
-                    "percentage": percentages[j]
-                })
             }
 
+            var k = 0;
+            for(var i = maximum.value; i > peak.value; i--){
+                var teste = {}
+                teste.percentage = percentages[k]
+                teste.value = i
+                allValues.push(teste)
+                k++;
+            }
+    
             for(var pos in allValues){
                 normalizationFactor = normalizationFactor + allValues[pos].percentage;
             }
@@ -63,7 +63,7 @@ module.exports = function(app){
             for(var pos in allValues){
                 allValues[pos].percentage = normalizationFactor * allValues[pos].percentage;
             }
-            
+
             for(var pos in allValues){
                 for(var i=0; i<=(allValues[pos].percentage * 100); i++){
                     sortVector.push(allValues[pos].value)
