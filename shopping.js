@@ -42,7 +42,7 @@ module.exports = function(app){
             product.produto_name = app.products.stock[buy].name;
 
             unitBuy = {
-                "consumidor": app.costumers.base[0].id,
+                "consumidor": 1,
                 "produto_id": app.products.stock[buy].id,
                 "quantidade": seed,
                 "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
