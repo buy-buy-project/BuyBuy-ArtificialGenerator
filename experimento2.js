@@ -3,7 +3,7 @@ module.exports = function(app){
     app.get("/experimento2/:id/:noise", function(req, res){
         var id = parseInt(req.params.id);
         var noise = parseFloat(req.params.noise);
-        var media = 15;
+        var media = 50;
         var Xvalues = [];
 
              
@@ -82,7 +82,7 @@ module.exports = function(app){
                 }
             }
             //console.log(sortVector);
-            res.json(sortVector);
+            //res.json(sortVector);
 
             quantity = sortVector[ Math.round(Math.random() * (sortVector.length) ) ]
             if(quantity < 0) quantity = 0;
@@ -107,7 +107,7 @@ module.exports = function(app){
                 minimum.value == 0;
             
             for(var i=maximum.value; i>=peak.value; i--){
-                percentages.unshift(Math.pow(i,25));
+                percentages.unshift(Math.pow(i,peakValue));
             }
  
             peak.percentage = maximum.value;
@@ -146,8 +146,12 @@ module.exports = function(app){
                 }
             }
             //console.log(sortVector);
-            //res.json(allValues);
-            return sortVector[ Math.round((Math.random() * 100)) ]
+            res.json(allValues);
+
+            var quantity = sortVector[ Math.round((Math.random() * 100)) ]
+            if(!quantity) quantity = 0;
+            
+            return quantity;
         }
 
         var shopping = { buy: [] }
