@@ -3,19 +3,88 @@ module.exports = function(app){
     app.get("/experimento2/:id/:noise", function(req, res){
         var id = parseInt(req.params.id);
         var noise = parseFloat(req.params.noise);
+        var media = 50;
+        var Xvalues = [];
 
+             
         var randomQuantityProductBuy = function(currentDay, daysInterval){
-            var seed;
-            if(Number.isInteger(currentDay/daysInterval)){
-                seed = gaussian(15, noise);
-            } else{
-                seed = 0;
+            var quantityOfBuy;
+            
+            for(var X=media-35; X != media+35   ; X++){
+                normalDistribution(X, media, noise);                    
             }
-            return seed;
-        }
-        //usar um vetor de 0 a 100 para colocar porcentagem de todos valores da gaussiana
+            //res.json(buyQuantity())
 
-        var gaussian = function (peakValue, sigma){
+            if(Number.isInteger(currentDay/daysInterval))
+                quantityOfBuy = buyQuantity();
+            else
+                quantityOfBuy = 0;
+            
+            return quantityOfBuy;
+        }
+
+        var buyQuantity = function(){
+            var sumPercentages = 0 ;
+            var vectorZAO = [];
+
+            for(pos in Xvalues){                    
+                var spaceOnVector = Xvalues[pos].percentage * 1000;
+                if(spaceOnVector > 1){
+                    for(i = spaceOnVector; i >= 1; i--){
+                        vectorZAO.push(Xvalues[pos].value);
+                    }
+                }
+            }
+            
+            return vectorZAO[ Math.round(Math.random() * (vectorZAO.length) )];
+        }
+
+        var normalDistribution = function(X, media, sigma){
+            if(X < 0) X = 0;
+            
+            //Gaussian count:
+            var firstPart =  1 / (Math.pow (2 * Math.PI * (Math.pow(2, sigma)) , 1/2) );
+            var potentiatesE = -( (Math.pow(( X - media ), 2)) / (2*(Math.pow(sigma, 2))) );
+            var secondPart = Math.pow(Math.exp(1), potentiatesE);
+            var result = firstPart * secondPart;
+            
+            Xvalues.push( {"value": X, "percentage": result} );
+
+            return result;
+        }
+
+        var sortGaussianValue = function(){
+
+            var normalizationFactor = 0;
+            var sortVector = [];
+            var quantity;
+
+            for(var pos in Xvalues){
+                normalizationFactor = normalizationFactor + Xvalues[pos].percentage;
+            }
+
+            normalizationFactor = 1 / normalizationFactor;
+
+            for(var pos in Xvalues){
+                Xvalues[pos].percentage = normalizationFactor * Xvalues[pos].percentage;
+            }
+
+            for(var pos in Xvalues){
+                for(var i=0; i<=(Xvalues[pos].percentage * 100); i++){
+                    sortVector.push(Xvalues[pos].value)
+                }
+            }
+            //console.log(sortVector);
+            //res.json(sortVector);
+
+            quantity = sortVector[ Math.round(Math.random() * (sortVector.length) ) ]
+            if(quantity < 0) quantity = 0;
+
+            return quantity;
+
+        }
+
+     /*   var gaussian = function (peakValue, sigma){
             var maximum = {};
             var minimum = {};
             var peak = {};
@@ -69,36 +138,31 @@ module.exports = function(app){
                     sortVector.push(allValues[pos].value)
                 }
             }
-
-            return sortVector[ Math.floor((Math.random() * 100)) ]
+            //console.log(sortVector);
+            //res.json(sortVector);
+            return sortVector[ Math.round((Math.random() * 100)) ]
         }
-
+*/
         var shopping = { buy: [] }
-        ,  collection = DATABASE.collection("shopping")
-        ,  seed
+        , collection = DATABASE.collection("shopping")
+        , quantityOfBuy
         , unitBuy
         , product = {};
 
-        for(var day = 1; day < 91; day++){
-            //for(var buy = 0; buy <= 30; buy++){
+        for(var day = 1; day < 300; day++){
+            quantityOfBuy = randomQuantityProductBuy(day, app.products.stock[id].daysIntervalNearly)    
 
-                seed = randomQuantityProductBuy(day, app.products.stock[id].daysIntervalNearly)    
-                
-                product.produto_id = app.products.stock[id].id;
-                product.produto_name = app.products.stock[id].name;
+            unitBuy = {
+                "consumidor": 1,
+                "produto_id": app.products.stock[id].id,
+                "quantidade": quantityOfBuy,
+                "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
+            }
 
-                unitBuy = {
-                    "consumidor": app.costumers.base[0].id,
-                    "produto_id": app.products.stock[id].id,
-                    "quantidade": seed,
-                    "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
-                }
-
-                shopping.buy.push(unitBuy);    
-                //collection.insert(unitBuy, function(err, result){});
-            //}
+            shopping.buy.push(unitBuy);    
+            //collection.insert(unitBuy, function(err, result){});
         }
+        
         res.json(shopping.buy);
-
     });
 }   
