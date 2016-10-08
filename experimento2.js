@@ -3,7 +3,7 @@ module.exports = function(app){
     app.get("/experimento2/:id/:noise", function(req, res){
         var id = parseInt(req.params.id);
         var noise = parseFloat(req.params.noise);
-        var media = 50;
+        var media = 15;
         var Xvalues = [];
 
              
@@ -15,8 +15,15 @@ module.exports = function(app){
             }
             //res.json(buyQuantity())
 
-            if(Number.isInteger(currentDay/daysInterval))
-                quantityOfBuy = buyQuantity();
+            if(Number.isInteger(currentDay/daysInterval)){
+                quantityOfBuy = gaussian(media, noise);
+                
+                //Gaussian 2
+                //quantityOfBuy = sortGaussianValue();
+
+                //Gaussian 3
+                //quantityOfBuy = buyQuantity();
+            }
             else
                 quantityOfBuy = 0;
             
@@ -75,7 +82,7 @@ module.exports = function(app){
                 }
             }
             //console.log(sortVector);
-            //res.json(sortVector);
+            res.json(sortVector);
 
             quantity = sortVector[ Math.round(Math.random() * (sortVector.length) ) ]
             if(quantity < 0) quantity = 0;
@@ -84,7 +91,7 @@ module.exports = function(app){
 
         }
 
-     /*   var gaussian = function (peakValue, sigma){
+        var gaussian = function (peakValue, sigma){
             var maximum = {};
             var minimum = {};
             var peak = {};
@@ -139,10 +146,10 @@ module.exports = function(app){
                 }
             }
             //console.log(sortVector);
-            //res.json(sortVector);
+            //res.json(allValues);
             return sortVector[ Math.round((Math.random() * 100)) ]
         }
-*/
+
         var shopping = { buy: [] }
         , collection = DATABASE.collection("shopping")
         , quantityOfBuy
