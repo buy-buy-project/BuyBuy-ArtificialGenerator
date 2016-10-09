@@ -27,7 +27,7 @@ module.exports = function(app){
             }
             else
                 quantityOfBuy = 0;
-            
+
             return quantityOfBuy;
         }
 
@@ -45,7 +45,7 @@ module.exports = function(app){
                 }
             }
             
-            return vectorZAO[ Math.round(Math.random() * (vectorZAO.length) )];
+            return vectorZAO[ Math.floor(Math.random() * (vectorZAO.length) )];
             //return vectorZAO;
         }
 
@@ -172,7 +172,7 @@ module.exports = function(app){
                 "quantidade": quantityOfBuy,
                 "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
             }
-
+            console.log(unitBuy.quantidade)
             shopping.buy.push(unitBuy);    
             //collection.insert(unitBuy, function(err, result){});
         }

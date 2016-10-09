@@ -50,7 +50,7 @@ module.exports = function(app){
                 }
             }
             
-            return vectorZAO[ Math.round(Math.random() * (vectorZAO.length) )];
+            return vectorZAO[ Math.floor(Math.random() * (vectorZAO.length) )];
             //return vectorZAO;
         }
 
