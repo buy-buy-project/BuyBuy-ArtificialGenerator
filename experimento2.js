@@ -5,7 +5,7 @@ module.exports = function(app){
         var noise = parseFloat(req.params.noise);
         var media = 50;
         var Xvalues = [];
-
+        var vectorZAO = [];
              
         var randomQuantityProductBuy = function(currentDay, daysInterval){
             var quantityOfBuy;
@@ -33,13 +33,14 @@ module.exports = function(app){
 
         var buyQuantity = function(){
             var sumPercentages = 0 ;
-            var vectorZAO = [];
 
-            for(pos in Xvalues){                    
-                var spaceOnVector = Xvalues[pos].percentage * 1000;
-                if(spaceOnVector > 1){
-                    for(i = spaceOnVector; i >= 1; i--){
-                        vectorZAO.push(Xvalues[pos].value);
+            if(!vectorZAO.length){
+                for(pos in Xvalues){                    
+                    var spaceOnVector = Xvalues[pos].percentage * 5000;
+                    if(spaceOnVector > 1){
+                        for(i = spaceOnVector; i >= 1; i--){
+                            vectorZAO.push(Xvalues[pos].value);
+                        }
                     }
                 }
             }
