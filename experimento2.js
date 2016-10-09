@@ -14,6 +14,7 @@ module.exports = function(app){
                 normalDistribution(X, media, noise);                    
             }
             //res.json(Xvalues)
+            //res.json(buyQuantity());
 
             if(Number.isInteger(currentDay/daysInterval)){
                 //quantityOfBuy = gaussian(media, noise);
@@ -35,7 +36,7 @@ module.exports = function(app){
             var vectorZAO = [];
 
             for(pos in Xvalues){                    
-                var spaceOnVector = Xvalues[pos].percentage * 5000;
+                var spaceOnVector = Xvalues[pos].percentage * 1000;
                 if(spaceOnVector > 1){
                     for(i = spaceOnVector; i >= 1; i--){
                         vectorZAO.push(Xvalues[pos].value);
