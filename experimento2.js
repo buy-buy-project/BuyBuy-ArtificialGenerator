@@ -107,7 +107,7 @@ module.exports = function(app){
                 minimum.value == 0;
             
             for(var i=maximum.value; i>=peak.value; i--){
-                percentages.unshift(Math.pow(i,peakValue));
+                percentages.unshift(Math.pow(i,25));
             }
  
             peak.percentage = maximum.value;
@@ -146,10 +146,10 @@ module.exports = function(app){
                 }
             }
             //console.log(sortVector);
-            res.json(allValues);
+            //res.json(allValues);
 
             var quantity = sortVector[ Math.round((Math.random() * 100)) ]
-            if(!quantity) quantity = 0;
+            if(quantity < 0) quantity = 0;
             
             return quantity;
         }
@@ -160,7 +160,7 @@ module.exports = function(app){
         , unitBuy
         , product = {};
 
-        for(var day = 1; day < 300; day++){
+        for(var day = 1; day < 365; day++){
             quantityOfBuy = randomQuantityProductBuy(day, app.products.stock[id].daysIntervalNearly)    
 
             unitBuy = {
