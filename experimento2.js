@@ -3,7 +3,7 @@ module.exports = function(app){
     app.get("/experimento2/:id/:noise", function(req, res){
         var id = parseInt(req.params.id);
         var noise = parseFloat(req.params.noise);
-        var media = 15;
+        var media = 50;
         var Xvalues = [];
 
              
@@ -13,16 +13,16 @@ module.exports = function(app){
             for(var X=media-35; X != media+35   ; X++){
                 normalDistribution(X, media, noise);                    
             }
-            //res.json(buyQuantity())
+            //res.json(Xvalues)
 
             if(Number.isInteger(currentDay/daysInterval)){
-                quantityOfBuy = gaussian(media, noise);
+                //quantityOfBuy = gaussian(media, noise);
                 
                 //Gaussian 2
                 //quantityOfBuy = sortGaussianValue();
 
                 //Gaussian 3
-                //quantityOfBuy = buyQuantity();
+                quantityOfBuy = buyQuantity();
             }
             else
                 quantityOfBuy = 0;
@@ -35,7 +35,7 @@ module.exports = function(app){
             var vectorZAO = [];
 
             for(pos in Xvalues){                    
-                var spaceOnVector = Xvalues[pos].percentage * 1000;
+                var spaceOnVector = Xvalues[pos].percentage * 5000;
                 if(spaceOnVector > 1){
                     for(i = spaceOnVector; i >= 1; i--){
                         vectorZAO.push(Xvalues[pos].value);
@@ -44,6 +44,7 @@ module.exports = function(app){
             }
             
             return vectorZAO[ Math.round(Math.random() * (vectorZAO.length) )];
+            //return vectorZAO;
         }
 
         var normalDistribution = function(X, media, sigma){
