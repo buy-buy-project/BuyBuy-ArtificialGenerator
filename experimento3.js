@@ -164,9 +164,9 @@ module.exports = function(app){
 
         var shakeTime = function(){
             for(pos in shopping.buy){
-                if(shopping.buy[pos].quantidade > 0){
+                if(shopping.buy[pos].quantidade > 0 && shopping.buy[pos+1]){
                     var neighborIndexSorted = (parseInt(pos) + parseInt(( Math.round( (Math.random() * 4  )-2 ))));
-  
+
                     var temp = shopping.buy[pos].quantidade;
                     shopping.buy[pos].quantidade = shopping.buy[neighborIndexSorted].quantidade
                     shopping.buy[neighborIndexSorted].quantidade = temp;
