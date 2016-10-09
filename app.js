@@ -16,6 +16,7 @@ var express = require('express')
       load('products').
         then('shopping').
         then('experimento2').
+        then('experimento3').
         into(app);
 
       app.listen(PORT, function (){
