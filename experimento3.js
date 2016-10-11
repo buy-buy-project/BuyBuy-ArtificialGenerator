@@ -5,6 +5,7 @@ module.exports = function(app){
         var noise = parseFloat(req.params.noise);
         var media = 50;
         var Xvalues = [];
+        var Xtimes = [];
         var vectorZAO = [];
         var shopping = { buy: [] }
         , collection = DATABASE.collection("shopping")
@@ -16,19 +17,14 @@ module.exports = function(app){
             var quantityOfBuy;
             
             for(var X=media-35; X != media+35   ; X++){
-                normalDistribution(X, media, noise);                    
+                normalDistribution(X, media, noise, 'quantity');                    
             }
             //res.json(Xvalues)
-            //res.json(buyQuantity());
+            //res.json(sortValue(Xvalues));
 
             if(Number.isInteger(currentDay/daysInterval)){
-                //quantityOfBuy = gaussian(media, noise);
-                
-                //Gaussian 2
-                //quantityOfBuy = sortGaussianValue();
-
-                //Gaussian 3
-                quantityOfBuy = buyQuantity();
+                quantityOfBuy = media;
+                //quantityOfBuy = sortValue(Xvalues);
             }
             else
                 quantityOfBuy = 0;
@@ -36,15 +32,15 @@ module.exports = function(app){
             return quantityOfBuy;
         }
 
-        var buyQuantity = function(){
+        var sortValue = function(probabilities){
             var sumPercentages = 0 ;
 
             if(!vectorZAO.length){
-                for(pos in Xvalues){                    
-                    var spaceOnVector = Xvalues[pos].percentage * 5000;
+                for(pos in probabilities){                    
+                    var spaceOnVector = probabilities[pos].percentage * 5000;
                     if(spaceOnVector > 1){
                         for(i = spaceOnVector; i >= 1; i--){
-                            vectorZAO.push(Xvalues[pos].value);
+                            vectorZAO.push(probabilities[pos].value);
                         }
                     }
                 }
@@ -54,7 +50,7 @@ module.exports = function(app){
             //return vectorZAO;
         }
 
-        var normalDistribution = function(X, media, sigma){
+        var normalDistribution = function(X, media, sigma, experiment){
             if(X < 0) X = 0;
             
             //Gaussian count:
@@ -63,114 +59,37 @@ module.exports = function(app){
             var secondPart = Math.pow(Math.exp(1), potentiatesE);
             var result = firstPart * secondPart;
             
-            Xvalues.push( {"value": X, "percentage": result} );
+            if(experiment == 'quantity'){
+                Xvalues.push( {"value": X, "percentage": result} );
+            } else if (experiment == 'time'){
+                Xtimes.push( {"value": X, "percentage": result} );
+            }
 
             return result;
         }
 
-        var sortGaussianValue = function(){
-
-            var normalizationFactor = 0;
-            var sortVector = [];
-            var quantity;
-
-            for(var pos in Xvalues){
-                normalizationFactor = normalizationFactor + Xvalues[pos].percentage;
-            }
-
-            normalizationFactor = 1 / normalizationFactor;
-
-            for(var pos in Xvalues){
-                Xvalues[pos].percentage = normalizationFactor * Xvalues[pos].percentage;
-            }
-
-            for(var pos in Xvalues){
-                for(var i=0; i<=(Xvalues[pos].percentage * 100); i++){
-                    sortVector.push(Xvalues[pos].value)
-                }
-            }
-            //console.log(sortVector);
-            //res.json(sortVector);
-
-            quantity = sortVector[ Math.round(Math.random() * (sortVector.length) ) ]
-            if(quantity < 0) quantity = 0;
-
-            return quantity;
-
-        }
-
-        var gaussian = function (peakValue, sigma){
-            var maximum = {};
-            var minimum = {};
-            var peak = {};
-            var percentages = [];
-            var allValues = [];
-            var normalizationFactor = 0;
-            var sortVector = [];
-            peak.value = peakValue;
-            maximum.value = peak.value + (parseInt(3 * sigma));
-            minimum.value = peak.value - (parseInt(3 * sigma));
-            
-            if(minimum.value < 0 )
-                minimum.value == 0;
-            
-            for(var i=maximum.value; i>=peak.value; i--){
-                percentages.unshift(Math.pow(i,25));
-            }
- 
-            peak.percentage = maximum.value;
-            
-            var j = 0;
-            for(var i = minimum.value; i <= peak.value; i++){
-                var teste = {};
-                teste.percentage = percentages[j]
-                teste.value = i
-                allValues.push(teste)
-                j++;
-            }
-
-            var k = 0;
-            for(var i = maximum.value; i > peak.value; i--){
-                var teste = {}
-                teste.percentage = percentages[k]
-                teste.value = i
-                allValues.push(teste)
-                k++;
-            }
-    
-            for(var pos in allValues){
-                normalizationFactor = normalizationFactor + allValues[pos].percentage;
-            }
-
-            normalizationFactor = 1 / normalizationFactor;
-
-            for(var pos in allValues){
-                allValues[pos].percentage = normalizationFactor * allValues[pos].percentage;
-            }
-
-            for(var pos in allValues){
-                for(var i=0; i<=(allValues[pos].percentage * 100); i++){
-                    sortVector.push(allValues[pos].value)
-                }
-            }
-            //console.log(sortVector);
-            //res.json(allValues);
-
-            var quantity = sortVector[ Math.round((Math.random() * 100)) ]
-            if(quantity < 0) quantity = 0;
-            
-            return quantity;
-        }
-
         var shakeTime = function(){
-            for(pos in shopping.buy){
-                if(shopping.buy[pos].quantidade > 0 && shopping.buy[pos+1]){
-                    var neighborIndexSorted = (parseInt(pos) + parseInt(( Math.round( (Math.random() * 4  )-2 ))));
+            var mediaTeste = 3;  
+            vectorZAO = [];
 
-                    var temp = shopping.buy[pos].quantidade;
-                    shopping.buy[pos].quantidade = shopping.buy[neighborIndexSorted].quantidade
-                    shopping.buy[neighborIndexSorted].quantidade = temp;
+            for(var X=mediaTeste-2; X != mediaTeste+3; X++){
+                normalDistribution(X, mediaTeste, noise, 'time');                    
+            }
+
+            for(pos in shopping.buy){
+                var neighborIndexSorted = parseInt(pos) + sortValue(Xtimes)-3;
+                
+                if(neighborIndexSorted > 363) neighborIndexSorted = 363;
+                
+                if(pos <= 6){
+                    while(neighborIndexSorted < 0){
+                        neighborIndexSorted = parseInt(pos) + sortValue(Xtimes)-3
+                    }
                 }
+                
+                var temp = shopping.buy[pos].quantidade;
+                shopping.buy[pos].quantidade = shopping.buy[neighborIndexSorted].quantidade
+                shopping.buy[neighborIndexSorted].quantidade = temp;
             } 
         }
 
@@ -185,8 +104,10 @@ module.exports = function(app){
             }
 
             shopping.buy.push(unitBuy);    
+
             //collection.insert(unitBuy, function(err, result){});
         }
+        
         shakeTime();
         res.json(shopping.buy);
     });
