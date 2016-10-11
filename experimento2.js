@@ -172,7 +172,7 @@ module.exports = function(app){
                 "quantidade": quantityOfBuy,
                 "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
             }
-            console.log(unitBuy.quantidade)
+            
             shopping.buy.push(unitBuy);    
             //collection.insert(unitBuy, function(err, result){});
         }
