@@ -1,9 +1,10 @@
 module.exports = function(app){
 
-    app.get("/experimento4/:id/:quantityNoise/:timeNoise", function(req, res){
+    app.get("/experimento4/:id/:quantityNoise/:timeNoise/:intervalDay", function(req, res){
         var id = parseInt(req.params.id);
         var quantityNoise = parseFloat(req.params.quantityNoise);
         var timeNoise = parseFloat(req.params.timeNoise);
+        var intervalDayReceived = parseFloat(req.params.intervalDay);
         var media = 50;
         var Xvalues = [];
         var Xtimes = [];
@@ -95,7 +96,7 @@ module.exports = function(app){
         }
 
         for(var day = 1; day < 365; day++){
-            quantityOfBuy = randomQuantityProductBuy(day, app.products.stock[id].daysIntervalNearly)    
+            quantityOfBuy = randomQuantityProductBuy(day, intervalDayReceived)
 
             unitBuy = {
                 "consumidor": 1,
