@@ -1,15 +1,14 @@
 module.exports = function(app){
 
     app.get("/experimento3/:id/:noise/:intervalDay", function(req, res){
-        var id = parseInt(req.params.id);
-        var noise = parseFloat(req.params.noise);
-        var media = 50;
-        var intervalDayReceived = parseFloat(req.params.intervalDay);
-        var Xvalues = [];
-        var Xtimes = [];
-        var vectorZAO = [];
-        var shopping = { buy: [] }
-        , collection = DATABASE.collection("shopping")
+        var id = parseInt(req.params.id)
+        , noise = parseFloat(req.params.noise)
+        , media = 50
+        , intervalDayReceived = parseFloat(req.params.intervalDay)
+        , Xvalues = []
+        , Xtimes = []
+        , vectorZAO = []
+        , shopping = { buy: [] }
         , quantityOfBuy
         , unitBuy
         , product = {};
@@ -20,12 +19,9 @@ module.exports = function(app){
             for(var X=media-35; X != media+35   ; X++){
                 normalDistribution(X, media, noise, 'quantity');                    
             }
-            //res.json(Xvalues)
-            //res.json(sortValue(Xvalues));
 
             if(Number.isInteger(currentDay/daysInterval)){
                 quantityOfBuy = media;
-                //quantityOfBuy = sortValue(Xvalues);
             }
             else
                 quantityOfBuy = 0;
@@ -106,10 +102,10 @@ module.exports = function(app){
 
             shopping.buy.push(unitBuy);    
 
-            //collection.insert(unitBuy, function(err, result){});
         }
         
         shakeTime();
+
         res.json(shopping.buy);
     });
 }   

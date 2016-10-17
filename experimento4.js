@@ -1,16 +1,15 @@
 module.exports = function(app){
 
     app.get("/experimento4/:id/:quantityNoise/:timeNoise/:intervalDay", function(req, res){
-        var id = parseInt(req.params.id);
-        var quantityNoise = parseFloat(req.params.quantityNoise);
-        var timeNoise = parseFloat(req.params.timeNoise);
-        var intervalDayReceived = parseFloat(req.params.intervalDay);
-        var media = 50;
-        var Xvalues = [];
-        var Xtimes = [];
-        var vectorZAO = [];
-        var shopping = { buy: [] }
-        , collection = DATABASE.collection("shopping")
+        var id = parseInt(req.params.id)
+        , quantityNoise = parseFloat(req.params.quantityNoise)
+        , timeNoise = parseFloat(req.params.timeNoise)
+        , intervalDayReceived = parseFloat(req.params.intervalDay)
+        , media = 50
+        , Xvalues = []
+        , Xtimes = []
+        , vectorZAO = []
+        , shopping = { buy: [] }
         , quantityOfBuy
         , unitBuy
         , product = {};
@@ -21,8 +20,6 @@ module.exports = function(app){
             for(var X=media-35; X != media+35   ; X++){
                 normalDistribution(X, media, quantityNoise, 'quantity');                    
             }
-            //res.json(Xvalues)
-            //res.json(sortValue(Xvalues));
 
             if(Number.isInteger(currentDay/daysInterval)){
                 //quantityOfBuy = media;
@@ -49,7 +46,6 @@ module.exports = function(app){
             }
             
             return vectorZAO[ Math.floor(Math.random() * (vectorZAO.length) )];
-            //return vectorZAO;
         }
 
         var normalDistribution = function(X, media, sigma, experiment){
@@ -106,8 +102,6 @@ module.exports = function(app){
             }
 
             shopping.buy.push(unitBuy);    
-
-            //collection.insert(unitBuy, function(err, result){});
         }
         
         shakeTime();

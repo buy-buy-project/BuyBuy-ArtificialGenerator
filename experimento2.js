@@ -1,12 +1,16 @@
 module.exports = function(app){
 
     app.get("/experimento2/:id/:noise/:intervalDay", function(req, res){
-        var id = parseInt(req.params.id);
-        var noise = parseFloat(req.params.noise);
-        var intervalDayReceived = parseFloat(req.params.intervalDay);
-        var media = 50;
-        var Xvalues = [];
-        var vectorZAO = [];
+        var id = parseInt(req.params.id)
+        , noise = parseFloat(req.params.noise)
+        , intervalDayReceived = parseInt(req.params.intervalDay)
+        , media = 50
+        , Xvalues = []
+        , vectorZAO = []
+        , shopping = { buy: [] }
+        , quantityOfBuy
+        , unitBuy
+        , product = {};
              
         var randomQuantityProductBuy = function(currentDay, daysInterval){
             var quantityOfBuy;
@@ -14,16 +18,8 @@ module.exports = function(app){
             for(var X=media-35; X != media+35   ; X++){
                 normalDistribution(X, media, noise);                    
             }
-            //res.json(Xvalues)
-            //res.json(buyQuantity());
 
             if(Number.isInteger(currentDay/daysInterval)){
-                //quantityOfBuy = gaussian(media, noise);
-                
-                //Gaussian 2
-                //quantityOfBuy = sortGaussianValue();
-
-                //Gaussian 3
                 quantityOfBuy = buyQuantity();
             }
             else
@@ -47,7 +43,6 @@ module.exports = function(app){
             }
             
             return vectorZAO[ Math.floor(Math.random() * (vectorZAO.length) )];
-            //return vectorZAO;
         }
 
         var normalDistribution = function(X, media, sigma){
@@ -64,106 +59,6 @@ module.exports = function(app){
             return result;
         }
 
-        var sortGaussianValue = function(){
-
-            var normalizationFactor = 0;
-            var sortVector = [];
-            var quantity;
-
-            for(var pos in Xvalues){
-                normalizationFactor = normalizationFactor + Xvalues[pos].percentage;
-            }
-
-            normalizationFactor = 1 / normalizationFactor;
-
-            for(var pos in Xvalues){
-                Xvalues[pos].percentage = normalizationFactor * Xvalues[pos].percentage;
-            }
-
-            for(var pos in Xvalues){
-                for(var i=0; i<=(Xvalues[pos].percentage * 100); i++){
-                    sortVector.push(Xvalues[pos].value)
-                }
-            }
-            //console.log(sortVector);
-            //res.json(sortVector);
-
-            quantity = sortVector[ Math.round(Math.random() * (sortVector.length) ) ]
-            if(quantity < 0) quantity = 0;
-
-            return quantity;
-
-        }
-
-        var gaussian = function (peakValue, sigma){
-            var maximum = {};
-            var minimum = {};
-            var peak = {};
-            var percentages = [];
-            var allValues = [];
-            var normalizationFactor = 0;
-            var sortVector = [];
-            peak.value = peakValue;
-            maximum.value = peak.value + (parseInt(3 * sigma));
-            minimum.value = peak.value - (parseInt(3 * sigma));
-            
-            if(minimum.value < 0 )
-                minimum.value == 0;
-            
-            for(var i=maximum.value; i>=peak.value; i--){
-                percentages.unshift(Math.pow(i,25));
-            }
- 
-            peak.percentage = maximum.value;
-            
-            var j = 0;
-            for(var i = minimum.value; i <= peak.value; i++){
-                var teste = {};
-                teste.percentage = percentages[j]
-                teste.value = i
-                allValues.push(teste)
-                j++;
-            }
-
-            var k = 0;
-            for(var i = maximum.value; i > peak.value; i--){
-                var teste = {}
-                teste.percentage = percentages[k]
-                teste.value = i
-                allValues.push(teste)
-                k++;
-            }
-    
-            for(var pos in allValues){
-                normalizationFactor = normalizationFactor + allValues[pos].percentage;
-            }
-
-            normalizationFactor = 1 / normalizationFactor;
-
-            for(var pos in allValues){
-                allValues[pos].percentage = normalizationFactor * allValues[pos].percentage;
-            }
-
-            for(var pos in allValues){
-                for(var i=0; i<=(allValues[pos].percentage * 100); i++){
-                    sortVector.push(allValues[pos].value)
-                }
-            }
-            //console.log(sortVector);
-            //res.json(allValues);
-
-            var quantity = sortVector[ Math.round((Math.random() * 100)) ]
-            if(quantity < 0) quantity = 0;
-            
-            return quantity;
-        }
-
-        var shopping = { buy: [] }
-        , collection = DATABASE.collection("shopping")
-        , quantityOfBuy
-        , unitBuy
-        , product = {};
-
         for(var day = 1; day < 365; day++){
             quantityOfBuy = randomQuantityProductBuy(day, intervalDayReceived)    
 
@@ -175,7 +70,6 @@ module.exports = function(app){
             }
             
             shopping.buy.push(unitBuy);    
-            //collection.insert(unitBuy, function(err, result){});
         }
         
         res.json(shopping.buy);

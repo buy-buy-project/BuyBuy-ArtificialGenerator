@@ -12,39 +12,29 @@ module.exports = function(app){
     });
 
     var randomQuantityProductBuy = function(currentDay, daysInterval){
-        var seed;
-        if(Number.isInteger(currentDay/daysInterval)){
-            seed = 5;
-            //seed = Math.floor((Math.random() * 10) + 1);
-        } else{
-            seed = 0;
-        }
-        return seed;
+        var quantity;
+        if(Number.isInteger(currentDay/daysInterval))
+            quantity = 5;
+        else
+            quantity = 0;
+        
+        return quantity;
     }
 
-    //Use here to do the gaussian
-    var randomIntFromInterval = function (min,max){
-        return Math.floor(Math.random()*(max-min+1)+min);
-    }
 
     var shopping = { buy: [] }
      ,  collection = DATABASE.collection("exeperiment1")
-     ,  seed
      , unitBuy
      , product = {};
 
     for(var day = 1; day < 91; day++){
         for(var buy = 0; buy <= 30; buy++){
-
-            seed = randomQuantityProductBuy(day, app.products.stock[buy].daysIntervalNearly)    
+            var quantity = randomQuantityProductBuy(day, app.products.stock[buy].daysIntervalNearly)    
             
-            product.produto_id = app.products.stock[buy].id;
-            product.produto_name = app.products.stock[buy].name;
-
             unitBuy = {
                 "consumidor": 1,
                 "produto_id": app.products.stock[buy].id,
-                "quantidade": seed,
+                "quantidade": quantity,
                 "data_lista": moment().subtract(day, 'days').format("YYYY-MM-DD")
             }
 
