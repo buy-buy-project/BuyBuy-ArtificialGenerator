@@ -64,33 +64,45 @@ module.exports = function(app){
             }
 
             return result;
-        }
+        };
+
+        var neighborIndexSortedFunction = function(pos, mediaTeste, callback){
+
+            var neighborIndexSorted = -1;
+            var ending = function () {
+                if(neighborIndexSorted < 0 || neighborIndexSorted > 363){
+                    neighborIndexSorted = parseInt(pos) + (sortValue(Xtimes) - mediaTeste);
+                    ending();
+                } else {
+                    callback(neighborIndexSorted);
+                }
+            };
+
+            ending();
+        };
 
         var shakeTime = function(){
-            var mediaTeste = 3;  
+            var mediaTeste = 50;
             vectorZAO = [];
-            
-            for(var X=mediaTeste-2; X != mediaTeste+3; X++){
-                normalDistribution(X, mediaTeste, timeNoise, 'time');                    
+
+            for(var X=mediaTeste-29; X != mediaTeste+30; X++){
+                normalDistribution(X, mediaTeste, noise, 'time');
             }
+            var historySaved = shopping.buy;
+            for(pos in historySaved){
 
-            for(pos in shopping.buy){
-                var neighborIndexSorted = parseInt(pos) + sortValue(Xtimes)-3;
-                
-                if(neighborIndexSorted > 363) neighborIndexSorted = 363;
-                
-                if(pos <= 6){
-                    while(neighborIndexSorted < 0){
-                        neighborIndexSorted = parseInt(pos) + sortValue(Xtimes)-3
-                    }
+                if(historySaved[pos].quantidade > 0){ //Troca só os dias de compras pra evitar swap.
+
+                    neighborIndexSortedFunction(pos, mediaTeste, function (neighborIndexSorted) {
+                        console.log(pos +' - ' + neighborIndexSorted);
+                        var temp = shopping.buy[pos].quantidade;
+                        shopping.buy[pos].quantidade = shopping.buy[neighborIndexSorted].quantidade;
+                        shopping.buy[neighborIndexSorted].quantidade = temp;
+                    });
                 }
-                
-                var temp = shopping.buy[pos].quantidade;
-                shopping.buy[pos].quantidade = shopping.buy[neighborIndexSorted].quantidade
-                shopping.buy[neighborIndexSorted].quantidade = temp;
-            } 
-        }
 
+            }
+        };
         for(var day = 1; day < 365; day++){
             quantityOfBuy = randomQuantityProductBuy(day, intervalDayReceived)
 
