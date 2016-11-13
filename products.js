@@ -1,9 +1,7 @@
 module.exports = function(app) {
 
     app.get("/produtos", function(req, res){
-        DATABASE.collection("products").find({}, {"_id": 0, "daysIntervalNearly":0}).toArray(function(err, result){
-            res.json(result);    
-        });
+       res.json(products);
     });
 
     var collection = DATABASE.collection("products");
