@@ -86,7 +86,7 @@ module.exports = function(app){
             vectorZAO = [];
 
             for(var X=mediaTeste-29; X != mediaTeste+30; X++){
-                normalDistribution(X, mediaTeste, noise, 'time');
+                normalDistribution(X, mediaTeste, timeNoise, 'time');
             }
             var historySaved = shopping.buy;
             for(pos in historySaved){
